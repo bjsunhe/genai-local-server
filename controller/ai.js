@@ -34,8 +34,21 @@ const runMySql=async (req, res, next) => {
   // console.log(response)
   
 
-axios.post(url, data, config).then(data=>console.log(data),err=>console.log(err));
+  const process = await fetch(
+    "http://34.125.249.167:8888/api/ai/openai-api",
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sql,
+        previousQuestions
+      }),
+    }
+  );
 
+  console.log(process.json());
 
 
 
