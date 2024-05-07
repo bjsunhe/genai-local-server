@@ -48,7 +48,7 @@ const runMySql=async (req, res, next) => {
     }
   );
 
-  console.log(process.json());
+  console.log(process.json().then(data=>console.log(data)));
 
 
 
