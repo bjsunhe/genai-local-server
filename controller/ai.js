@@ -16,11 +16,12 @@ const runMySql=async (req, res, next) => {
   let previousQuestions=req.body.previousQuestions
   console.log(previousQuestions)
 
-// make request openai
-async function makePostRequest(naturalLanguage) {
-  const url = 'http://localhost:8090/api/ai/openai-api';
+
+  const url = 'http://34.125.249.167:8888/api/ai/openai-api';
   const data = {
-      naturalLanguage
+      sql,
+      previousQuestions
+
   };
   const config = {
       headers: {
@@ -28,54 +29,52 @@ async function makePostRequest(naturalLanguage) {
       }
   };
 
-  try {
-      const response = await axios.post(url, data, config);
-      console.log('Data posted successfully:', response.data);
-  } catch (error) {
-      console.error('Error occurred:', error);
-  }
-}
-
-makePostRequest();
-
-
-
-
-
-
-  const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'Cool1234567890-',
-    database: 'bmg'
-  });
-  
-  connection.connect(err => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err);
-      return;
-    }
-    console.log('Connected to MySQL');
+  // const response = await axios.post(url, data, config);
+  // console.log('Data posted successfully:');
+  // console.log(response)
   
 
-    connection.query(response.choices[0].message.content, (err, results) => {
-      if (err) {
-        console.error('Error selecting data:', err);
-      } else {
-        console.log('Selected data:');
-        console.log(results); // Log the query results
-            connection.end();
+axios.post(url, data, config).then(data=>console.log(data),err=>console.log(err));
+
+
+
+
+
+
+
+  // const connection = mysql.createConnection({
+  //   host: '127.0.0.1',
+  //   user: 'root',
+  //   password: 'Cool123456789',
+  //   database: 'bmg'
+  // });
+  
+  // connection.connect(err => {
+  //   if (err) {
+  //     console.error('Error connecting to MySQL:', err);
+  //     return;
+  //   }
+  //   console.log('Connected to MySQL');
+  
+
+  //   connection.query(response.choices[0].message.content, (err, results) => {
+  //     if (err) {
+  //       console.error('Error selecting data:', err);
+  //     } else {
+  //       console.log('Selected data:');
+  //       console.log(results); // Log the query results
+  //           connection.end();
   
   
-        res.status(200).json({
-          success: "success",
-          sql:sql,
-          result:results,
-        });
-      }
+  //       res.status(200).json({
+  //         success: "success",
+  //         sql:sql,
+  //         result:results,
+  //       });
+  //     }
   
-    });
-  });
+  //   });
+  // });
 
 
 
